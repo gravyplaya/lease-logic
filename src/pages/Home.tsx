@@ -64,10 +64,6 @@ const Home: React.FC = () => {
                     >
                       <IonButton shape="round">Get Started</IonButton>
                     </IonRouterLink>
-
-                    <IonRouterLink href={"/search"}>
-                      <IonButton shape="round">Search Properties</IonButton>
-                    </IonRouterLink>
                   </>
                 )}
               </div>
@@ -94,7 +90,7 @@ const Home: React.FC = () => {
                     <IonRouterLink href="/NewPropertyForm">
                       <IonButton shape="round">Get Started</IonButton>
                     </IonRouterLink>
-                    <IonButton shape="round">Manage Properties</IonButton>
+                    {/* <IonButton shape="round">Manage Properties</IonButton> */}
                   </>
                 )}
               </div>
