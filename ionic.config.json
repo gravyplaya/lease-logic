@@ -1,7 +1,9 @@
 {
-  "name": "site",
+  "name": "Lease Logic",
   "integrations": {
     "capacitor": {}
   },
-  "type": "react-vite"
+  "type": "react-vite",
+  "experimentalCloseWatcher": true,
+  "hardwareBackButton": true
 }
