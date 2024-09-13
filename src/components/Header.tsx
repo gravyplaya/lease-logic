@@ -9,6 +9,7 @@ import {
 import "./Header.css";
 import SignUpSignIn from "./SignUpSignIn";
 import { settings } from "ionicons/icons";
+import { useUser } from "@clerk/clerk-react";
 
 interface ContainerProps {
   page?: string;
@@ -16,6 +17,7 @@ interface ContainerProps {
 
 const Header: React.FC<ContainerProps> = (props) => {
   const router = useIonRouter();
+  const { isSignedIn } = useUser();
 
   const handleTitleClick = () => {
     router.push("/home", "root", "replace");
@@ -41,9 +43,13 @@ const Header: React.FC<ContainerProps> = (props) => {
               gap: "20px",
             }}
           >
-            <IonRouterLink href="/profile">
-              <IonIcon icon={settings} color="dark"></IonIcon>
-            </IonRouterLink>
+            {isSignedIn && (
+              <>
+                <IonRouterLink href="/profile">
+                  <IonIcon icon={settings} color="dark"></IonIcon>
+                </IonRouterLink>
+              </>
+            )}
             <SignUpSignIn />
           </div>
         </IonTitle>
