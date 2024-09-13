@@ -38,3 +38,6 @@ font-size: 42px;
 .hero-button:hover {
   background-color: #3171e0; /* Darker shade for hover effect */
 }
+ion-icon {
+  font-size: 32px;
+}

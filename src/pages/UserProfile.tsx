@@ -40,7 +40,6 @@ const UserProfile: React.FC = () => {
             <IonButton
               href="https://billing.stripe.com/p/login/test_00gbLo7ayc6m0HC6oo"
               target="_blank"
-              rel="noopener noreferrer"
             >
               Manage Billing
             </IonButton>

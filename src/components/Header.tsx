@@ -1,6 +1,14 @@
-import { IonHeader, IonTitle, IonToolbar, useIonRouter } from "@ionic/react";
+import {
+  IonHeader,
+  IonIcon,
+  IonRouterLink,
+  IonTitle,
+  IonToolbar,
+  useIonRouter,
+} from "@ionic/react";
 import "./Header.css";
 import SignUpSignIn from "./SignUpSignIn";
+import { settings } from "ionicons/icons";
 
 interface ContainerProps {
   page?: string;
@@ -26,7 +34,18 @@ const Header: React.FC<ContainerProps> = (props) => {
         </IonTitle>
         <IonTitle>{props.page}</IonTitle>
         <IonTitle slot="end">
-          <SignUpSignIn />
+          <div
+            style={{
+              display: "inline-flex",
+              justifyContent: "space-between",
+              gap: "20px",
+            }}
+          >
+            <IonRouterLink href="/profile">
+              <IonIcon icon={settings} color="dark"></IonIcon>
+            </IonRouterLink>
+            <SignUpSignIn />
+          </div>
         </IonTitle>
       </IonToolbar>
     </IonHeader>

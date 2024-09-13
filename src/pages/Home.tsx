@@ -27,12 +27,46 @@ import Faqs from "../components/Faqs";
 import { useUser } from "@clerk/clerk-react";
 
 import "./Home.css";
+import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
   const { isSignedIn, user, isLoaded } = useUser();
-
+  const [userLink, setUserLink] = useState<string | undefined>("");
   const userId = isLoaded && isSignedIn ? user.id : null;
 
+  useEffect(() => {
+    if (isLoaded) {
+      getResults();
+    }
+  }, [isLoaded]);
+
+  const getResults = () => {
+    fetch(
+      "https://nocodb.tavonni.com/api/v2/tables/m1rhj6vo38oxsn9/records/?where=(UserId,eq," +
+        user?.id +
+        ")",
+      {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          "xc-auth": import.meta.env.VITE_NOCODB_TOKEN,
+          "xc-token": import.meta.env.VITE_NOCODB_TOKEN,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response2) => response2.json())
+      .then((data2) => {
+        if (data2.list.length === 0) {
+          setUserLink(
+            `https://buy.stripe.com/test_fZecMR6QkdRbdxK001?client_reference_id=${userId}`
+          );
+        } else {
+          setUserLink("/newtenantform");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
+  };
   return (
     <IonPage>
       <IonContent fullscreen>
@@ -59,9 +93,7 @@ const Home: React.FC = () => {
                 )}
                 {isSignedIn && (
                   <>
-                    <IonRouterLink
-                      href={`https://buy.stripe.com/test_fZecMR6QkdRbdxK001?client_reference_id=${userId}`}
-                    >
+                    <IonRouterLink href="/newtenantform">
                       <IonButton shape="round">Get Started</IonButton>
                     </IonRouterLink>
                   </>
@@ -135,13 +167,13 @@ const Home: React.FC = () => {
 
                 <IonCardContent>
                   3 applications
-                  <IonButton
+                  {/* <IonButton
                     href={`https://buy.stripe.com/test_fZecMR6QkdRbdxK001?client_reference_id=${userId}`}
                     expand="block"
                     shape="round"
                   >
                     Subscribe Now
-                  </IonButton>
+                  </IonButton> */}
                 </IonCardContent>
               </IonCard>
             </IonCol>
@@ -154,13 +186,13 @@ const Home: React.FC = () => {
 
                 <IonCardContent>
                   10 applications{" "}
-                  <IonButton
+                  {/* <IonButton
                     href={`https://buy.stripe.com/test_aEU28d4IcbJ38dq3ce?client_reference_id=${userId}`}
                     expand="block"
                     shape="round"
                   >
                     Subscribe Now
-                  </IonButton>
+                  </IonButton> */}
                 </IonCardContent>
               </IonCard>
             </IonCol>
@@ -173,13 +205,13 @@ const Home: React.FC = () => {
 
                 <IonCardContent>
                   Unlimited applications
-                  <IonButton
+                  {/* <IonButton
                     href={`https://buy.stripe.com/test_aEU5kp8Ys14p79m7sv?client_reference_id=${userId}`}
                     expand="block"
                     shape="round"
                   >
                     Subscribe Now
-                  </IonButton>
+                  </IonButton> */}
                 </IonCardContent>
               </IonCard>
             </IonCol>

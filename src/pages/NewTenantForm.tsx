@@ -2,6 +2,9 @@ import {
   IonButton,
   IonCard,
   IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
   IonCol,
   IonContent,
   IonDatetime,
@@ -13,6 +16,7 @@ import {
   IonPage,
   IonRadio,
   IonRadioGroup,
+  IonRouterLink,
   IonRow,
   IonText,
 } from "@ionic/react";
@@ -28,8 +32,10 @@ const NewTenantForm: React.FC = () => {
   const [results, setResults] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [isVoiceActive, setisVoiceActive] = useState(false);
+  const { isSignedIn, user, isLoaded } = useUser();
 
-  const { user, isSignedIn } = useUser();
+  const userId = isLoaded && isSignedIn ? user.id : null;
+
   const [formData, setFormData] = useState({
     name: user?.fullName || "",
     email: user?.primaryEmailAddress?.emailAddress || "",
@@ -439,10 +445,80 @@ const NewTenantForm: React.FC = () => {
                 </IonText>
               </IonCardContent>
             </IonCard>
+            {/* IF QUALIFIED */}
             {results && !results.Notes.includes("NOT QUALIFIED") && (
-              <Search
-                queryParams={{ bedrooms: parseInt(results.NumBedrooms) }}
-              />
+              <>
+                {/* Pricing row */}
+                <IonRow className="ion-justify-content-center ion-align-items-center">
+                  <IonCol size="4">
+                    <IonCard style={{ textAlign: "center" }}>
+                      <IonCardHeader>
+                        <IonCardSubtitle>Basic</IonCardSubtitle>
+                        <IonCardTitle>$20/mo</IonCardTitle>
+                      </IonCardHeader>
+
+                      <IonCardContent>
+                        3 applications
+                        <IonButton
+                          href={`https://buy.stripe.com/test_fZecMR6QkdRbdxK001?client_reference_id=${userId}`}
+                          expand="block"
+                          shape="round"
+                        >
+                          Subscribe Now
+                        </IonButton>
+                      </IonCardContent>
+                    </IonCard>
+                  </IonCol>
+                  <IonCol size="4">
+                    <IonCard style={{ textAlign: "center" }}>
+                      <IonCardHeader>
+                        <IonCardSubtitle>Standard</IonCardSubtitle>
+                        <IonCardTitle>$40/mo</IonCardTitle>
+                      </IonCardHeader>
+
+                      <IonCardContent>
+                        10 applications{" "}
+                        <IonButton
+                          href={`https://buy.stripe.com/test_aEU28d4IcbJ38dq3ce?client_reference_id=${userId}`}
+                          expand="block"
+                          shape="round"
+                        >
+                          Subscribe Now
+                        </IonButton>
+                      </IonCardContent>
+                    </IonCard>
+                  </IonCol>
+                  <IonCol size="4">
+                    <IonCard style={{ textAlign: "center" }}>
+                      <IonCardHeader>
+                        <IonCardSubtitle>Premium</IonCardSubtitle>
+                        <IonCardTitle>$100/mo</IonCardTitle>
+                      </IonCardHeader>
+
+                      <IonCardContent>
+                        Unlimited applications
+                        <IonButton
+                          href={`https://buy.stripe.com/test_aEU5kp8Ys14p79m7sv?client_reference_id=${userId}`}
+                          expand="block"
+                          shape="round"
+                        >
+                          Subscribe Now
+                        </IonButton>
+                      </IonCardContent>
+                    </IonCard>
+                  </IonCol>
+                </IonRow>
+                <Search
+                  queryParams={{ bedrooms: parseInt(results.NumBedrooms) }}
+                />
+              </>
+            )}
+            {/* IF  NOT QUALIFIED */}
+            {results && results.Notes.includes("**NOT QUALIFIED**") && (
+              <>
+                You didn't qualify. Would you like to try again? Here are some
+                resources that may help.
+              </>
             )}
           </>
         )}
